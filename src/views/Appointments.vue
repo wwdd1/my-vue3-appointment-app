@@ -8,6 +8,8 @@ import DateTimeInput from '../components/input/DateTimeInput.vue'
 import Button from '../components/button/Button.vue'
 import Avatar from '@/components/avatar/Avatar.vue'
 import AvatarGroup from '@/components/avatar/AvatarGroup.vue'
+import Text from '@/components/text/Text.vue'
+import Orientation from '@/components/orientation/Orientation.vue'
 
 const avatars = ref([
   {
@@ -67,7 +69,15 @@ function onClick() {
       </div>
     </template>
     <template v-slot:header>
-      <div>header content</div>
+      <div class="px-4 py-8 bg-gray">
+        <Orientation orientation="vertical">
+          <Button label="First Btn"></Button>
+          <Orientation orientation="horizontal">
+            <Text>This is a hello world header!</Text>
+            <Button label="Test"></Button>
+          </Orientation>
+        </Orientation>
+      </div>
     </template>
   </HeaderContentLayout>
 </template>
