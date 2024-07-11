@@ -20,7 +20,7 @@ const model = defineModel({
     return value
   }
 })
-const emit = defineEmits<Emits<InputValueType>>()
+defineEmits<Emits<InputValueType>>()
 const items = ref<SelectOptionValueType[]>([])
 
 onBeforeMount(() => {
@@ -30,7 +30,7 @@ onBeforeMount(() => {
         items.value = data
       })
       .catch((err) => {
-        console.error('Cannot fetch data from datasource:')
+        console.error('[SelectInput]Cannot fetch data from datasource:')
         console.error(err)
       })
   }

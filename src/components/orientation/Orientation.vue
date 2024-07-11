@@ -7,9 +7,6 @@ defineEmits<Emits<MouseEvent>>()
 
 const slots = useSlots()
 const slotNodes = slots.default ? slots.default() : []
-if (slotNodes.length !== 2) {
-  throw new Error('Orientation component expects 2 child components.')
-}
 
 const classes = computed(() => {
   if (orientation === 'horizontal') {

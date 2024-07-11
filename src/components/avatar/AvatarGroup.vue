@@ -26,7 +26,7 @@ const invisibleAvatarCountLabel = computed((): string | null => {
 
 function onClick(event: MouseEvent) {
   console.log('group item click', event)
-  // emit(EMIT_TYPE_CLICK, event)
+  emit(EMIT_TYPE_CLICK, event)
 }
 </script>
 

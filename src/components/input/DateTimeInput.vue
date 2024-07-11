@@ -5,7 +5,7 @@ import type { Props, InputValueType, Emits } from './InputBase'
 
 defineProps<Props<InputValueType>>()
 const model = defineModel()
-const emit = defineEmits<Emits<InputValueType>>()
+defineEmits<Emits<InputValueType>>()
 </script>
 
 <template>

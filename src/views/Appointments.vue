@@ -1,83 +1,40 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { MAX_VISIBLE_AVATAR_FOR_GROUP } from '@/lib/constants'
 
 import HeaderContentLayout from '../layouts/HeaderContentLayout.vue'
-import TextInput from '../components/input/TextInput.vue'
-import SelectInput, { type OptionItemType } from '../components/input/SelectInput.vue'
-import DateTimeInput from '../components/input/DateTimeInput.vue'
-import Button from '../components/button/Button.vue'
-import Avatar from '@/components/avatar/Avatar.vue'
 import AvatarGroup from '@/components/avatar/AvatarGroup.vue'
-import Text from '@/components/text/Text.vue'
-import Orientation from '@/components/orientation/Orientation.vue'
+import List from '@/components/list/List.vue'
+import AppointmentListItem from '@/components/listItem/AppointmentListItem.vue'
+import { getAppointments } from '@/api/appointment'
+import { getAgents } from '@/api/agent'
+import { mapAgentsToAppointments } from '@/lib/utils/appointment'
 
-const avatars = ref([
-  {
-    initials: 'MC',
-    backgroundColor: '#832135'
-  },
-  {
-    initials: 'SA',
-    backgroundColor: '#398361'
-  },
-  {
-    initials: 'AS',
-    backgroundColor: '#613983'
-  },
-  {
-    initials: 'HG',
-    backgroundColor: '#836913'
-  }
-])
+const appointmentsDataSource = getAppointments().then((data) => data.records)
+const agentsDataSource = getAgents().then((data) => data.records)
 
-const x = ref('Hello world')
-const y = ref()
-const z = ref(new Date())
-
-const dataSource = new Promise<OptionItemType[]>((res) => {
-  res([
-    { id: '1', label: 'Playstation 5' },
-    { id: '2', label: 'Xbox One' },
-    { id: '3', label: 'Nintendo Switch' },
-    { id: '4', label: 'Steam Deck' }
-  ])
+const appointmentsWithAgentsDataSource = Promise.all([
+  appointmentsDataSource,
+  agentsDataSource
+]).then((data) => {
+  const [appointments, agents] = data
+  return mapAgentsToAppointments(appointments, agents)
 })
-
-function onClick() {
-  console.log(x.value)
-  console.log(y.value)
-  console.log(z.value)
-}
 </script>
 
 <template>
   <HeaderContentLayout>
     <template v-slot:default>
-      <div>
-        <TextInput type="text" label="hello world" v-model="x"> </TextInput>
-        <SelectInput v-model="y" placeholder="Choose one" :data-source="dataSource"></SelectInput>
-        <DateTimeInput v-model="z"></DateTimeInput>
-        <Button label="Click Me!" @click="onClick"> Click </Button>
-      </div>
-
-      <div>
-        <Avatar
-          :initials="avatars[0].initials"
-          :background-color="avatars[0].backgroundColor"
-        ></Avatar>
-        <AvatarGroup :avatars="avatars" :visible-count="3"></AvatarGroup>
-      </div>
+      <List :data-source="appointmentsWithAgentsDataSource" v-slot="{ item }">
+        <AppointmentListItem v-bind="item">
+          <template #agent-avatars>
+            <AvatarGroup
+              :avatars="item.fields.agent_avatars"
+              :visible-count="MAX_VISIBLE_AVATAR_FOR_GROUP"
+            ></AvatarGroup>
+          </template>
+        </AppointmentListItem>
+      </List>
     </template>
-    <template v-slot:header>
-      <div class="px-4 py-8 bg-gray">
-        <Orientation orientation="vertical">
-          <Button label="First Btn"></Button>
-          <Orientation orientation="horizontal">
-            <Text>This is a hello world header!</Text>
-            <Button label="Test"></Button>
-          </Orientation>
-        </Orientation>
-      </div>
-    </template>
+    <template v-slot:header> Nothing </template>
   </HeaderContentLayout>
 </template>

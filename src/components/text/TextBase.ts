@@ -1,9 +1,10 @@
 import { type Size, EMIT_TYPE } from '../../lib/types'
 
-type BuiltInTextFormatterType = 'fullName' | 'phone' | 'address' | 'date'
+export type BuiltInTextFormatterType = 'fullname' | 'phone' | 'address' | 'date' | 'datetime'
 
 export interface Props {
-  text?: string
+  ellipsisMaxCharLength?: number
+  wrap?: boolean
   variant?: 'bold' | 'normal' | 'light'
   formatter?: BuiltInTextFormatterType | ((input: string) => string)
   size?: Size
