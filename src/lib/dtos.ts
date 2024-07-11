@@ -31,6 +31,10 @@ interface ApiEntity<T> {
   fields: T
 }
 
+export interface PaginationParams {
+  offset?: string
+}
+
 export interface Appointment extends ApiEntity<AppointmentFields> {}
 export interface Agent extends ApiEntity<AgentFields> {}
 export interface AppointmentWithAgent extends ApiEntity<AppointmentFieldsWithAgents> {}

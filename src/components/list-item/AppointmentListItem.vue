@@ -5,6 +5,7 @@ import { type Appointment } from '@/lib/dtos'
 import Text from '@/components/text/Text.vue'
 import Orientation from '@/components/orientation/Orientation.vue'
 import { resolveStatus, resolveTimeLeft } from '@/lib/utils/appointment'
+import { STATUS } from '@/lib/constants'
 
 const { fields } = defineProps<Props & Appointment>()
 
@@ -49,7 +50,7 @@ defineEmits<Emits<Appointment>>()
       <Orientation orientation="horizontal">
         <Orientation orientation="horizontal" class="bg-black text-white">
           <Text>{{ statusText }}</Text>
-          <Text v-if="statusText === 'Upcoming'">
+          <Text v-if="statusText === STATUS.UPCOMING">
             {{ resolveTimeLeft(fields) }}
           </Text>
         </Orientation>

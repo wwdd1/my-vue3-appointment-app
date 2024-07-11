@@ -4,17 +4,16 @@ import { MAX_VISIBLE_AVATAR_FOR_GROUP } from '@/lib/constants'
 import HeaderContentLayout from '../layouts/HeaderContentLayout.vue'
 import AvatarGroup from '@/components/avatar/AvatarGroup.vue'
 import List from '@/components/list/List.vue'
-import AppointmentListItem from '@/components/listItem/AppointmentListItem.vue'
+import AppointmentListItem from '@/components/list-item/AppointmentListItem.vue'
 import { getAppointments } from '@/api/appointment'
 import { getAgents } from '@/api/agent'
 import { mapAgentsToAppointments } from '@/lib/utils/appointment'
-
-const appointmentsDataSource = getAppointments().then((data) => data.records)
-const agentsDataSource = getAgents().then((data) => data.records)
+import type { Appointment, Agent } from '@/lib/dtos'
+import { fetchAllPaged } from '@/lib/utils/api'
 
 const appointmentsWithAgentsDataSource = Promise.all([
-  appointmentsDataSource,
-  agentsDataSource
+  fetchAllPaged<Appointment>(getAppointments),
+  fetchAllPaged<Agent>(getAgents),
 ]).then((data) => {
   const [appointments, agents] = data
   return mapAgentsToAppointments(appointments, agents)
