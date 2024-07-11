@@ -41,7 +41,7 @@ function onClickNext() {
     <li v-for="pageNum in pageNumbers" :key="pageNum">
       <Button
         :label="String(pageNum)"
-        :class="{ 'bg-[red]': pageNum === page }"
+        :class="{ 'bg-red': pageNum == page }"
         @click="onClickPage(pageNum)"
       ></Button>
     </li>

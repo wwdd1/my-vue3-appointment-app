@@ -48,17 +48,19 @@ defineEmits<Emits<Appointment>>()
         {{ fields.appointment_address }}
       </Text>
       <Orientation orientation="horizontal">
-        <Orientation orientation="horizontal" class="bg-black text-white">
+        <Orientation orientation="horizontal" class="bg-black text-white p-2 rounded-full">
           <Text>{{ statusText }}</Text>
           <Text v-if="statusText === STATUS.UPCOMING">
             {{ resolveTimeLeft(fields) }}
           </Text>
         </Orientation>
-        <Text formatter="datetime">
+        <Text formatter="datetime" class="mx-4">
           {{ fields.appointment_date }}
         </Text>
       </Orientation>
-      <slot name="agent-avatars"></slot>
+      <div class="mx-4">
+        <slot name="agent-avatars"></slot>
+      </div>
     </Orientation>
   </div>
 </template>

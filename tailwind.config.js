@@ -6,7 +6,8 @@ export default {
       colors: {
         black: '#000',
         white: '#FFF',
-        gray: '#999'
+        gray: '#999',
+        red: '#F00'
       }
     },
   },
