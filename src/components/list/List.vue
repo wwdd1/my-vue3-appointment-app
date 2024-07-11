@@ -2,16 +2,16 @@
 import { ref, watchEffect } from 'vue'
 import { type Props, type Emits, type WithId } from './ListBase'
 
-const { dataSource } = defineProps<Props<T>>()
+const props = defineProps<Props<T>>()
 defineEmits<Emits<MouseEvent>>()
 const items = ref<T[]>([])
 
 const isPending = ref(true)
 const error = ref<Error | null>(null)
 
-function fetch() {
+watchEffect(() => {
   isPending.value = true
-  dataSource
+  props.dataSource
     .then((data) => {
       items.value = data
       error.value = null
@@ -24,10 +24,6 @@ function fetch() {
     .finally(() => {
       isPending.value = false
     })
-}
-
-watchEffect(() => {
-  fetch()
 })
 </script>
 
