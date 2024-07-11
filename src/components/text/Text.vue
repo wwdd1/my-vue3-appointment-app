@@ -13,21 +13,18 @@ if (defaultSlot.type.toString() !== 'Symbol(v-txt)') {
   throw new Error('[Text] children must be a text node')
 }
 const { children: text } = defaultSlot
+const formatters = {
+  fullname,
+  date,
+  datetime,
+  phone
+} as Record<string, (input: string) => string>
 
 const formatted = computed(() => {
   const input = String(text)
   let output = input
-  if (formatter === 'fullname') {
-    output = fullname(input)
-  }
-  if (formatter === 'date') {
-    output = date(input)
-  }
-  if (formatter === 'datetime') {
-    output = datetime(input)
-  }
-  if (formatter === 'phone') {
-    output = phone(input)
+  if (formatter) {
+    output = formatters[formatter as string](input)
   }
   if (ellipsisMaxCharLength && ellipsisMaxCharLength > 0) {
     output = ellipsis(output, ellipsisMaxCharLength)

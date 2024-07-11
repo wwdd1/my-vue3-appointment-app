@@ -1,6 +1,3 @@
-// const INPUT_TYPE = ['text', 'datetime', 'select'] as const
-// type InputType = (typeof INPUT_TYPE)[number]
-
 export type InputValueType = string
 export type SelectOptionValueType = {
   id: string
